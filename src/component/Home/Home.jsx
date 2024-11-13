@@ -60,7 +60,7 @@ export const Home = () => {
             <h1 className='text-2xl font-semibold text-gray-400 pb-5'>
                 All Restaurant
             </h1>
-            <div className='flex flex-wrap items-center justify-around gap-5'>
+            <div className='flex flex-wrap items-center justify-around gap-4'>
             {
                 restaurant.restaurants.map((item)=><RestaurantCard item={item}/>)
             }
