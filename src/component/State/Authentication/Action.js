@@ -51,7 +51,7 @@ export const loginUser = (reqData) => async (dispatch) =>{
 }
 
 export const getUser = (jwt) => async (dispatch) =>{
-
+    console.log("JWT Token:", jwt); // Log the token to verify
     dispatch({type: GET_USER_REQUEST})
     try {
         
@@ -114,6 +114,5 @@ export const changeRole = (jwt) => async (dispatch) => {
         dispatch({ type: CHANGE_ROLE_FAILURE, payload: error });
     }
 };
-
 
 

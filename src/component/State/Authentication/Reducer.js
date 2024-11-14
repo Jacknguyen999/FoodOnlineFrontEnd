@@ -44,7 +44,17 @@ export const authReducer = (state =initialState,action) =>{
                         
                     }
                     case CHANGE_ROLE_SUCCESS:
-            return { ...state, isLoading: false, user: { ...state.user, role: action.payload.role } };
+                        localStorage.setItem('jwt',action.payload.jwt)
+            return {
+                 ...state, 
+                 sLoading: false,
+                user: { ...state.user,
+                     role: action.payload.role 
+                    },
+                    jwt: action.payload.jwt,
+                    success: "Role changed successfully",
+                };
+                     
             case ADD_TO_FAVORITE_SUCCESS:
                 return {
                     ...state,
@@ -74,3 +84,7 @@ export const authReducer = (state =initialState,action) =>{
     }
 
 }
+
+
+
+
