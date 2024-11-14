@@ -1,15 +1,15 @@
-import { Avatar, Box, Card, CardHeader, Chip, Icon, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Avatar, Box, Button, Card, CardHeader, Chip, Icon, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import React, { useEffect } from 'react'
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteFoodAction, getMenuItemsByRestaurantId } from '../../component/State/Menu/Action';
+import { deleteFoodAction, getMenuItemsByRestaurantId, updateMenuItemAvailability } from '../../component/State/Menu/Action';
 
-const order = [
-    1, 1, 1, 1
+// const order = [
+//     1, 1, 1, 1
 
-]
+// ]
 
 const MenuTable = () => {
     const dispatch = useDispatch();
@@ -30,6 +30,9 @@ const MenuTable = () => {
     const handleRemoveFood = (foodId) => {
         dispatch(deleteFoodAction({ foodId, jwt }))
     }
+    const handleUpdateFood = (foodId) => {
+        dispatch(updateMenuItemAvailability({ foodId, jwt }))
+    }
     return (
         <Box>
             <Card className='mt-1'>
@@ -47,14 +50,12 @@ const MenuTable = () => {
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
-
                                 <TableCell align="left">Image</TableCell>
                                 <TableCell align="right">Name</TableCell>
                                 <TableCell align="right">Ingredient</TableCell>
                                 <TableCell align="right">Price</TableCell>
                                 <TableCell align="right">Availability</TableCell>
                                 <TableCell align="right">Delete</TableCell>
-
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -77,7 +78,12 @@ const MenuTable = () => {
                                         </Chip>
                                     )}</TableCell>
                                     <TableCell align="right">{item.price} VND</TableCell>
-                                    <TableCell align="right">{item.available ? "Available" : "Unavailable"}</TableCell>
+                                    <TableCell align="right">
+                                        <Button onClick={() => handleUpdateFood(item.id)}>
+                                            {item.available ? "Available" : "Unavailable"}
+                                        </Button>
+
+                                    </TableCell>
                                     <TableCell align="right">
                                         <IconButton color="error" onClick={() => handleRemoveFood(item.id)}>
                                             <DeleteIcon />
