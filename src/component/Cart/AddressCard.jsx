@@ -2,12 +2,10 @@ import React from 'react'
 
 import HomeIcon from '@mui/icons-material/Home';
 import { Button, Card } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
+
 
 const AddressCard = ({item,showButton,handleSelectAddress}) => {
-    const { auth } = useSelector(Store => Store);
-    const dispatch = useDispatch();
-console.log("User", auth.user.addresses)
+    
     
     return (
         <Card className="flex gap-5 w-64 p-5">

@@ -32,11 +32,26 @@ const Cart = () => {
     
     const { cart,auth } = useSelector(Store => Store);
     
+    
     const [loading, setLoading] = useState(true);  // Loading state to track if cart data is available
     const handleClose = () => setOpen(false);
-    const createOrderUsingSelectedAddress = () => {
-        console.log('Order created')
-    }
+    const createOrderUsingSelectedAddress = (index) => {
+        const selectedAddress = auth.user.addresses[index];
+        const data = {
+            restaurantId: cart.cartItems[0]?.food?.restaurent?.id, // Ensure this is correctly set
+            deliveryAddress: {
+                streetAddress: selectedAddress.streetAddress,
+                city: selectedAddress.city,
+                state: selectedAddress.state,
+                postalCode: selectedAddress.postalCode,
+                country: "VietNam",
+            },
+        };
+    
+        console.log("Creating order with data:", data); // Debugging
+        dispatch(createOrder(data));
+    };
+    
     const handleOpenAddressModal = () => {
         setOpen(true)
     }
@@ -126,7 +141,11 @@ const Cart = () => {
                         </h1>
                         <div className='flex gap-5 flex-wrap justify-center'>
                             {auth.user.addresses?.map((item, index) => (
-                                <AddressCard handleSelectAddress={createOrderUsingSelectedAddress} item={item} showButton={true} key={index} />
+                                <AddressCard 
+                                handleSelectAddress={() =>createOrderUsingSelectedAddress(index)} 
+                                item={item} 
+                                showButton={true}
+                                key={index} />
                             ))}
                             <Card className="flex gap-5 w-64 p-5">
                                 <AddLocationAltIcon />

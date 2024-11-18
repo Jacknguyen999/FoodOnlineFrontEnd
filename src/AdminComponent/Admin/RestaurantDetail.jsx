@@ -3,15 +3,26 @@ import React from 'react'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateRestaurantStatus } from '../../component/State/Restaurant/Action';
+import { deleteRestaurant, updateRestaurantStatus } from '../../component/State/Restaurant/Action';
+import { red } from '@mui/material/colors';
+import { useNavigate } from 'react-router-dom';
 
 export const RestaurantDetail = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const jwt = localStorage.getItem('jwt');
   const { restaurant } = useSelector(Store => Store)
   const handleRestarantStatus = () => {
     dispatch(updateRestaurantStatus({restaurantId : restaurant.usersRestaurant?.id , jwt})); //
 
+
+  }
+  const handleRemoveRestaurant = () =>{
+    if (window.confirm("Are you sure you want to remove this restaurant?")) {
+      dispatch(deleteRestaurant({restaurantId : restaurant.usersRestaurant?.id , jwt}));
+      navigate('/')
+    }
+    
 
   }
   return (
@@ -33,6 +44,7 @@ export const RestaurantDetail = () => {
             {restaurant.usersRestaurant?.open ? "close" : "open"}
           </Button>
         </div>
+       
 
       </div>
       <Grid container spacing={2}>
@@ -241,6 +253,20 @@ export const RestaurantDetail = () => {
         </Grid>
 
       </Grid>
+
+      
+      <div className='pt-10'>
+          <Button
+          className='py-[1rem] px-[2rem] text-gray-950 '
+          color = {"error"}
+          variant='contained'
+          size='large'
+          onClick={handleRemoveRestaurant}
+          >
+            Delete Restaurant
+          </Button>
+        </div>
+      
 
     </div>
   )

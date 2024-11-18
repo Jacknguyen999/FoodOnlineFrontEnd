@@ -15,3 +15,17 @@ height: 90vh;
     opacity: 0.2;
 }
 
+.restaurant {
+    font-family: "Parisienne", cursive;
+    font-weight: 400;
+    font-style: normal;
+  
+}
+
+.welcome {
+    font-family: "Edu AU VIC WA NT Pre", cursive;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+

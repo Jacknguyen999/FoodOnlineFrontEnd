@@ -2,9 +2,8 @@ import React, { useEffect } from 'react'
 import "./Home.css";
 import MultiItemCarousel from './MultiItemCarousel';
 import RestaurantCard from '../Restaurant/RestaurantCard';
-import Auth from '../Auth/Auth';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllRestaurantsAction } from '../State/Restaurant/Action';
+import { getAllRestaurantsAction, searchRestaurant } from '../State/Restaurant/Action';
 
 
 
@@ -15,14 +14,19 @@ export const Home = () => {
     const jwt = localStorage.getItem('jwt');
     const {restaurant} = useSelector(Store =>Store)
 
-    console.log("restaurant" ,restaurant );
+    // console.log("restaurant" ,restaurant );
 
     useEffect(() => {
+        
         dispatch(getAllRestaurantsAction(jwt))
+        
+        
+        dispatch(searchRestaurant)
+        
         
     },[])
 
-    
+    const restaurantsToDisplay = restaurant.searchResults.length ? restaurant.searchResults : restaurant.restaurants;
     
 
   return (
@@ -32,10 +36,10 @@ export const Home = () => {
 
         <div className='w-[50vw] z-10 text-center'>
 
-        <p className='text-2xl lg:text-6xl font-bold z-10 py-5'>
+        <p className=' restaurant text-2xl lg:text-6xl font-semibold z-10 py-5'>
             Thomas Food
         </p>
-        <p className='z-10 text-gray-300 text-xl lg:text-4xl'>
+        <p className='welcome z-10 text-gray-200 text-xl lg:text-4xl'>
             Welcome to our website!
         </p>
 
@@ -62,7 +66,9 @@ export const Home = () => {
             </h1>
             <div className='flex flex-wrap items-center justify-around gap-4'>
             {
-                restaurant.restaurants.map((item)=><RestaurantCard item={item}/>)
+                restaurant.restaurants.map((item)=><RestaurantCard item={item}/>) 
+                /* restaurantsToDisplay.map((item)=><RestaurantCard item={item}/>) */
+                
             }
 
             </div>
